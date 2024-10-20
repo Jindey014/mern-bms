@@ -19,6 +19,8 @@ import {
   Box,
   useToast,
 } from '@chakra-ui/react'
+import { Link, useLoaderData } from 'react-router-dom'
+
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons'
 
 const BookTable = () => {
@@ -98,9 +100,11 @@ const BookTable = () => {
                       label="Edit Details"
                       bg={useColorModeValue('#2c2c2c', '#ffffffff')}
                     >
-                      <Button colorScheme="blue">
-                        <EditIcon />
-                      </Button>
+                      <Link to={`/edit/${book._id}`}>
+                        <Button colorScheme="blue">
+                          <EditIcon />
+                        </Button>
+                      </Link>
                     </Tooltip>
                     <Tooltip
                       label="Delete Book"

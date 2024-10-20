@@ -16,6 +16,7 @@ const HomePage = () => {
       <Container maxW={'container.xl'} mt={12} p={6} h={'100vh'}>
         <VStack>
           <Heading>List of Books</Heading>
+
           <BookTable />
           {books.length === 0 && (
             <Text>

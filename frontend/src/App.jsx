@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import MainLayout from './layout/MainLayout'
 import HomePage from './pages/HomePage'
 import CreatePage from './pages/CreatePage'
+import EditPage from './pages/EditPage'
 
 function App() {
   const router = createBrowserRouter([
@@ -18,6 +19,10 @@ function App() {
         {
           path: '/create',
           element: <CreatePage />,
+        },
+        {
+          path: '/edit/:id',
+          element: <EditPage />,
         },
       ],
     },

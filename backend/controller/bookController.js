@@ -10,6 +10,19 @@ export const getAllBooks = async (req, res) => {
     }
 }
 
+export const getBook = async (req, res) => {
+    const { id } = req.params
+    try {
+        const book = await Book.findById(id)
+        res.status(200).json({
+            success: true, data: book, message: "Book fetched sucessfully"
+        })
+    } catch (error) {
+        console.log("Error in fetching the book", error.message)
+        res.status({ success: false, message: "Server Error" })
+    }
+}
+
 export const addBook = async (req, res) => {
     const book = req.body
     const newBook = new Book(book)

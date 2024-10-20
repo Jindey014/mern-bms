@@ -8,8 +8,20 @@ import {
   useColorMode,
   useColorModeValue,
   Tooltip,
+  IconButton,
 } from '@chakra-ui/react'
-import { AddIcon, SunIcon, MoonIcon } from '@chakra-ui/icons'
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+} from '@chakra-ui/react'
+import { AddIcon, SunIcon, MoonIcon, HamburgerIcon } from '@chakra-ui/icons'
+
 import { Link } from 'react-router-dom'
 
 const Navbar = () => {
@@ -21,7 +33,7 @@ const Navbar = () => {
         <Flex
           justifyContent={'space-between'}
           alignItems={'center'}
-          direction={{ base: 'column', lg: 'row', md: 'row' }}
+          // direction={{ base: 'column', lg: 'row', md: 'row' }}
           p={2}
         >
           <Link to="/">
@@ -34,12 +46,27 @@ const Navbar = () => {
             </Text>
           </Link>
           <HStack spacing={'4'} alignItems={'center'} mt={{ base: 2 }}>
+            <Menu>
+              <MenuButton
+                as={IconButton}
+                aria-label="Options"
+                icon={<HamburgerIcon boxSize={'22px'} />}
+                display={{ base: 'block', md: 'none', lg: 'none' }}
+              />
+              <MenuList>
+                <Link to="/create">
+                  <MenuItem>Create Book</MenuItem>
+                </Link>
+
+                <MenuItem onClick={toggleColorMode}>Toggle Background</MenuItem>
+              </MenuList>
+            </Menu>
             <Link to="/create">
               <Tooltip
                 label="Create new Book Entry"
                 bg={useColorModeValue('#2c2c2c', '#ffffffff')}
               >
-                <Button>
+                <Button display={{ base: 'none', md: 'block', lg: 'block' }}>
                   <AddIcon />
                 </Button>
               </Tooltip>
@@ -48,7 +75,10 @@ const Navbar = () => {
               label="Toggle Background"
               bg={useColorModeValue('#2c2c2c', '#ffffff')}
             >
-              <Button onClick={toggleColorMode}>
+              <Button
+                onClick={toggleColorMode}
+                display={{ base: 'none', md: 'block', lg: 'block' }}
+              >
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
             </Tooltip>

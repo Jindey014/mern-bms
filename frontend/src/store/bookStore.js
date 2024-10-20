@@ -2,6 +2,7 @@ import { create } from 'zustand'
 
 export const useBookStore = create((set) => ({
     books: [],
+    book: [],
     setBooks: (books) => set({ books }),
     createBook: async (newBook) => {
         if (!newBook.name || !newBook.author) {
@@ -27,6 +28,11 @@ export const useBookStore = create((set) => ({
         const data = await res.json()
         set({ books: data.data })
     },
+    getBook: async (pid) => {
+        const res = await fetch(`/api/books/${pid}`)
+        const data = await res.json()
+        set({ book: data.data })
+    },
     deleteBook: async (pid) => {
         const res = await fetch(`/api/books/${pid}`, {
             method: "DELETE"
@@ -35,8 +41,8 @@ export const useBookStore = create((set) => ({
         set((state) => ({ books: state.books.filter((book) => pid !== book._id) }))
         return { success: true, message: data.message }
     },
-    updateBook: async (pid, updatedBook) => {
-        const res = await fetch(`/api/books/${pid}`, {
+    updateBook: async (updatedBook) => {
+        const res = await fetch(`/api/books/${updatedBook._id}`, {
             method: "PUT",
             headers: {
                 "Content-type": "application/json",
@@ -44,6 +50,8 @@ export const useBookStore = create((set) => ({
             body: JSON.stringify(updatedBook)
         })
         const data = await res.json()
+        set((state) => ({ books: state.books.map((book) => updatedBook._id === book._id ? data.data : book) }))
+        return { success: true, message: data.message }
     }
 }))
 
